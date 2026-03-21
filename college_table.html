@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>College Info Table</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Source+Sans+3:wght@300;400;600&display=swap');
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Source Sans 3', sans-serif;
+      background: #f5f0e8;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+
+    .wrapper {
+      background: #fff;
+      border: 2px solid #1a1a1a;
+      border-radius: 4px;
+      padding: 2.5rem;
+      max-width: 860px;
+      width: 100%;
+      box-shadow: 6px 6px 0 #1a1a1a;
+    }
+
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem;
+      color: #1a1a1a;
+      margin-bottom: 1.8rem;
+      text-align: center;
+      letter-spacing: 0.03em;
+      border-bottom: 2px solid #1a1a1a;
+      padding-bottom: 0.8rem;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th, td {
+      border: 1.5px solid #1a1a1a;
+      padding: 0.75rem 1rem;
+      text-align: center;
+      font-size: 0.95rem;
+      vertical-align: middle;
+    }
+
+    thead th {
+      background: #1a1a1a;
+      color: #f5f0e8;
+      font-family: 'Playfair Display', serif;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      font-size: 0.9rem;
+    }
+
+    tbody tr:nth-child(odd) { background: #faf7f2; }
+    tbody tr:nth-child(even) { background: #fff; }
+
+    tbody tr:hover { background: #eee8d8; transition: background 0.2s; }
+
+    td.label {
+      font-weight: 600;
+      text-align: left;
+      background: #f0ebe0;
+      color: #1a1a1a;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 0.2rem 0.65rem;
+      border: 1.5px solid #1a1a1a;
+      border-radius: 2px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      background: #fff;
+      margin: 0.15rem;
+    }
+
+    .badge.arts    { background: #fce4b0; }
+    .badge.science { background: #c8e6c9; }
+    .badge.commerce{ background: #bbdefb; }
+
+    .badge.y1 { background: #f8bbd0; }
+    .badge.y2 { background: #e1bee7; }
+    .badge.y3 { background: #ffe0b2; }
+
+    .total {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #1a1a1a;
+    }
+
+    audio {
+      width: 100%;
+      margin-top: 0.3rem;
+    }
+
+    .img-placeholder {
+      width: 80px;
+      height: 60px;
+      border: 1.5px dashed #999;
+      border-radius: 3px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #aaa;
+      font-size: 0.75rem;
+      margin: 0 auto;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <h1>College Information</h1>
+    <table>
+      <thead>
+        <tr>
+          <th>Photo</th>
+          <th>Audio</th>
+          <th colspan="3">Faculty</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><div class="img-placeholder">📷 Photo</div></td>
+          <td><audio controls><source src="#" type="audio/mpeg">Audio</audio></td>
+          <td><span class="badge arts">Arts</span></td>
+          <td><span class="badge science">Science</span></td>
+          <td><span class="badge commerce">Commerce</span></td>
+        </tr>
+        <tr>
+          <td class="label">Profile Image</td>
+          <td><div class="img-placeholder">🖼️ Image</div></td>
+          <td><span class="badge y1">1<sup>st</sup> Year</span></td>
+          <td><span class="badge y2">2<sup>nd</sup> Year</span></td>
+          <td><span class="badge y3">3<sup>rd</sup> Year</span></td>
+        </tr>
+        <tr>
+          <td class="label" rowspan="2">Student</td>
+          <td>Boys</td>
+          <td colspan="3" rowspan="2" class="total">Total :- 1015</td>
+        </tr>
+        <tr>
+          <td>Girls</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</body>
+</html>
