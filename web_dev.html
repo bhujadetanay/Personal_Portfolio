@@ -1,0 +1,1494 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- ── EDIT: Update your name in the title ── -->
+  <title>Module 1 — Web Development | YOUR_NAME</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+  <style>
+    /* ============================================================
+       CSS VARIABLES — same as portfolio, tweak here
+       ============================================================ */
+    :root {
+      --accent: #00e5a0;
+      --accent-dim: rgba(0, 0, 0, 0.15);
+      --accent2: #00b4d8;
+      /* secondary blue accent */
+      --accent3: #f59e0b;
+      /* amber for day markers */
+      --bg: #000000;
+      --bg2: #111621;
+      --bg3: #000000;
+      --text: #e8eaf0;
+      --muted: #8892a4;
+      --border: rgba(255, 255, 255, .07);
+      --font-head: 'Syne', sans-serif;
+      --font-body: 'DM Sans', sans-serif;
+      --radius: 14px;
+      --tr: .35s cubic-bezier(.4, 0, .2, 1);
+      --nav-h: 68px;
+    }
+
+    /* ── Reset ── */
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+      overflow-x: hidden;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    ul {
+      list-style: none;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    ::-webkit-scrollbar {
+      width: 5px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: var(--bg);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--accent);
+      border-radius: 99px;
+    }
+
+    /* ── Utility ── */
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    .accent {
+      color: var(--accent);
+    }
+
+    .accent2 {
+      color: var(--accent2);
+    }
+
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--accent-dim);
+      color: var(--accent);
+      font-size: .72rem;
+      font-weight: 600;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      padding: 4px 12px;
+      border-radius: 99px;
+      border: 1px solid var(--accent);
+    }
+
+    .chip.blue {
+      background: rgba(0, 180, 216, .12);
+      color: var(--accent2);
+      border-color: var(--accent2);
+    }
+
+    .chip.amber {
+      background: rgba(245, 158, 11, .12);
+      color: var(--accent3);
+      border-color: var(--accent3);
+    }
+
+    .section-title {
+      font-family: var(--font-head);
+      font-size: clamp(1.8rem, 4vw, 2.6rem);
+      font-weight: 800;
+      letter-spacing: -.02em;
+      line-height: 1.15;
+      margin-bottom: 40px;
+    }
+
+    .section-title span {
+      color: var(--accent);
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 11px 26px;
+      border-radius: 99px;
+      font-family: var(--font-head);
+      font-weight: 700;
+      font-size: .88rem;
+      letter-spacing: .04em;
+      cursor: pointer;
+      border: none;
+      transition: all var(--tr);
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #0b0e14;
+    }
+
+    .btn-primary:hover {
+      background: #00ffb2;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0, 229, 160, .3);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--accent);
+      border: 1.5px solid var(--accent);
+    }
+
+    .btn-outline:hover {
+      background: var(--accent-dim);
+    }
+
+    /* ── Animations (visible by default, enhanced by JS) ── */
+    body.js-ready .fade-up {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity .7s ease, transform .7s ease;
+    }
+
+    body.js-ready .fade-up.visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* ======================================================
+       NAVBAR
+       ====================================================== */
+    #navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: var(--nav-h);
+      z-index: 1000;
+      transition: background var(--tr), box-shadow var(--tr);
+    }
+
+    #navbar.scrolled {
+      background: rgba(11, 14, 20, .92);
+      backdrop-filter: blur(14px);
+      box-shadow: 0 2px 24px rgba(0, 0, 0, .4);
+    }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 100%;
+    }
+
+    .nav-logo {
+      font-family: var(--font-head);
+      font-size: 1.2rem;
+      font-weight: 800;
+      letter-spacing: -.02em;
+    }
+
+    .nav-logo span {
+      color: var(--accent);
+    }
+
+    .nav-breadcrumb {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: .82rem;
+      color: var(--muted);
+    }
+
+    .nav-breadcrumb i {
+      font-size: .7rem;
+    }
+
+    .nav-breadcrumb .current {
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 28px;
+      align-items: center;
+    }
+
+    .nav-links a {
+      font-size: .86rem;
+      font-weight: 500;
+      color: var(--muted);
+      transition: color var(--tr);
+      position: relative;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: var(--accent);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform var(--tr);
+      border-radius: 99px;
+    }
+
+    .nav-links a:hover {
+      color: var(--text);
+    }
+
+    .nav-links a:hover::after,
+    .nav-links a.active::after {
+      transform: scaleX(1);
+    }
+
+    .nav-links a.active {
+      color: var(--accent);
+    }
+
+    .samosa {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      background: none;
+      border: none;
+    }
+
+    .samosa span {
+      width: 24px;
+      height: 2px;
+      background: var(--text);
+      border-radius: 99px;
+      display: block;
+      transition: all var(--tr);
+    }
+
+    /* ======================================================
+       HERO / BANNER
+       ====================================================== */
+    #hero {
+      min-height: 60vh;
+      display: flex;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+      padding-top: var(--nav-h);
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 55% 60% at 80% 30%, rgba(0, 180, 216, .10) 0%, transparent 65%),
+        radial-gradient(ellipse 45% 50% at 15% 70%, rgba(0, 229, 160, .08) 0%, transparent 65%);
+      pointer-events: none;
+    }
+
+    .hero-bg::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255, 255, 255, .022) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, .022) 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-badge {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
+    .hero-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: .82rem;
+      color: var(--muted);
+      border: 1px solid var(--border);
+      padding: 6px 14px;
+      border-radius: 99px;
+      background: var(--bg2);
+      transition: all var(--tr);
+    }
+
+    .hero-back:hover {
+      color: var(--accent);
+      border-color: var(--accent);
+    }
+
+    .hero-title {
+      font-family: var(--font-head);
+      font-size: clamp(2.4rem, 6vw, 4.5rem);
+      font-weight: 800;
+      letter-spacing: -.04em;
+      line-height: 1.05;
+      margin-bottom: 18px;
+    }
+
+    .hero-subtitle {
+      font-size: clamp(.95rem, 2vw, 1.2rem);
+      color: var(--muted);
+      max-width: 620px;
+      margin-bottom: 32px;
+    }
+
+    .hero-meta {
+      display: flex;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+
+    .hero-meta-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: .85rem;
+      color: var(--muted);
+    }
+
+    .hero-meta-item i {
+      color: var(--accent);
+    }
+
+    /* progress bar under hero */
+    .module-progress {
+      margin-top: 40px;
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px 28px;
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      flex-wrap: wrap;
+    }
+
+    .mp-label {
+      font-size: .8rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      min-width: 80px;
+    }
+
+    .mp-track {
+      flex: 1;
+      height: 8px;
+      background: var(--border);
+      border-radius: 99px;
+      overflow: hidden;
+      min-width: 120px;
+    }
+
+    .mp-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      border-radius: 99px;
+    }
+
+    .mp-pct {
+      font-family: var(--font-head);
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--accent);
+    }
+
+    /* ======================================================
+       WHAT I LEARNED
+       ====================================================== */
+    #learned {
+      padding: 90px 0;
+    }
+
+    .learned-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .learn-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px 26px;
+      position: relative;
+      overflow: hidden;
+      transition: border-color var(--tr), transform var(--tr), box-shadow var(--tr);
+    }
+
+    .learn-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+    }
+
+    .learn-card.html::before {
+      background: linear-gradient(90deg, #e44d26, #f16529);
+    }
+
+    .learn-card.css::before {
+      background: linear-gradient(90deg, #264de4, #2965f1);
+    }
+
+    .learn-card.js::before {
+      background: linear-gradient(90deg, #f0db4f, #e8c700);
+    }
+
+    .learn-card:hover {
+      border-color: rgba(0, 229, 160, .3);
+      transform: translateY(-5px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, .3);
+    }
+
+    .learn-icon {
+      width: 52px;
+      height: 52px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.6rem;
+      margin-bottom: 18px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .learn-card.html .learn-icon {
+      background: rgba(228, 77, 38, .15);
+      color: #f16529;
+    }
+
+    .learn-card.css .learn-icon {
+      background: rgba(38, 77, 228, .15);
+      color: #2965f1;
+    }
+
+    .learn-card.js .learn-icon {
+      background: rgba(240, 219, 79, .15);
+      color: #f0db4f;
+    }
+
+    .learn-card h3 {
+      font-family: var(--font-head);
+      font-size: 1.15rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    .learn-card p {
+      font-size: .88rem;
+      color: var(--muted);
+      line-height: 1.7;
+      margin-bottom: 18px;
+    }
+
+    .topic-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .topic-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: .84rem;
+      color: var(--muted);
+    }
+
+    .topic-item i {
+      color: var(--accent);
+      font-size: .7rem;
+      flex-shrink: 0;
+    }
+
+    /* ======================================================
+       ASSIGNMENTS OVERVIEW
+       ====================================================== */
+    #assignments {
+      padding: 90px 0;
+      background: var(--bg2);
+    }
+
+    .assignment-table-wrap {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    thead tr {
+      background: var(--bg3);
+    }
+
+    thead th {
+      padding: 14px 20px;
+      font-family: var(--font-head);
+      font-size: .8rem;
+      font-weight: 700;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      text-align: left;
+    }
+
+    tbody tr {
+      border-top: 1px solid var(--border);
+      transition: background var(--tr);
+    }
+
+    tbody tr:hover {
+      background: var(--bg3);
+    }
+
+    tbody td {
+      padding: 16px 20px;
+      font-size: .88rem;
+      vertical-align: middle;
+    }
+
+    .day-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      background: var(--accent-dim);
+      color: var(--accent);
+      font-family: var(--font-head);
+      font-size: .8rem;
+      font-weight: 700;
+      border: 1px solid rgba(0, 229, 160, .3);
+    }
+
+    .status-done {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: .78rem;
+      font-weight: 600;
+      color: var(--accent);
+      background: var(--accent-dim);
+      border: 1px solid rgba(0, 229, 160, .3);
+      padding: 4px 10px;
+      border-radius: 99px;
+    }
+
+    .status-wip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: .78rem;
+      font-weight: 600;
+      color: var(--accent3);
+      background: rgba(245, 158, 11, .12);
+      border: 1px solid rgba(245, 158, 11, .3);
+      padding: 4px 10px;
+      border-radius: 99px;
+    }
+
+    .td-title {
+      font-weight: 500;
+      color: var(--text);
+    }
+
+    .td-tech {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .tech-pill {
+      padding: 3px 10px;
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 99px;
+      font-size: .74rem;
+      color: var(--muted);
+    }
+
+    /* ======================================================
+       DAY-WISE SHOWCASE
+       ====================================================== */
+    #showcase {
+      padding: 90px 0;
+    }
+
+    .days-nav {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 48px;
+    }
+
+    .day-btn {
+      padding: 8px 20px;
+      border-radius: 99px;
+      font-size: .82rem;
+      font-weight: 600;
+      border: 1.5px solid var(--border);
+      background: transparent;
+      color: var(--muted);
+      cursor: pointer;
+      transition: all var(--tr);
+      font-family: var(--font-body);
+    }
+
+    .day-btn.active,
+    .day-btn:hover {
+      background: var(--accent-dim);
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .day-panel {
+      display: none;
+    }
+
+    .day-panel.active {
+      display: block;
+    }
+
+    .day-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 24px;
+      margin-bottom: 36px;
+      flex-wrap: wrap;
+    }
+
+    .day-number-big {
+      font-family: var(--font-head);
+      font-size: 4.5rem;
+      font-weight: 800;
+      color: rgba(0, 229, 160, .12);
+      line-height: 1;
+      flex-shrink: 0;
+    }
+
+    .day-info h2 {
+      font-family: var(--font-head);
+      font-size: 1.6rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .day-info p {
+      font-size: .92rem;
+      color: var(--muted);
+      line-height: 1.7;
+      max-width: 560px;
+    }
+
+    .day-content-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+
+    /* Assignment card within day */
+    .assignment-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      transition: border-color var(--tr), transform var(--tr), box-shadow var(--tr);
+    }
+
+    .assignment-card:hover {
+      border-color: rgba(0, 229, 160, .3);
+      transform: translateY(-4px);
+      box-shadow: 0 16px 36px rgba(0, 0, 0, .3);
+    }
+
+    .assignment-preview {
+      width: 100%;
+      aspect-ratio: 16/9;
+      background: var(--bg3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 10px;
+      color: var(--muted);
+      font-size: .8rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* live code preview iframe */
+    .assignment-preview iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      pointer-events: none;
+    }
+
+    .assignment-preview i {
+      font-size: 2.4rem;
+      color: rgba(0, 229, 160, .25);
+    }
+
+    .preview-label {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      font-size: .68rem;
+      font-weight: 700;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      color: var(--accent);
+      background: var(--accent-dim);
+      border: 1px solid rgba(0, 229, 160, .3);
+      padding: 3px 8px;
+      border-radius: 6px;
+    }
+
+    .assignment-body {
+      padding: 20px 22px;
+    }
+
+    .assignment-body h4 {
+      font-family: var(--font-head);
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .assignment-body p {
+      font-size: .85rem;
+      color: var(--muted);
+      line-height: 1.65;
+      margin-bottom: 14px;
+    }
+
+    .assignment-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .assignment-tech {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .assignment-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: .8rem;
+      font-weight: 600;
+      color: var(--accent);
+      border: 1px solid var(--accent);
+      padding: 5px 14px;
+      border-radius: 99px;
+      transition: all var(--tr);
+    }
+
+    .assignment-link:hover {
+      background: var(--accent-dim);
+    }
+
+    /* what I did panel (notes card) */
+    .notes-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px 26px;
+      grid-column: 1 / -1;
+    }
+
+    .notes-card h4 {
+      font-family: var(--font-head);
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .notes-card h4 i {
+      color: var(--accent);
+    }
+
+    .notes-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .note-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      font-size: .88rem;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .note-item::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+      margin-top: 8px;
+      flex-shrink: 0;
+    }
+
+    /* ======================================================
+       SKILLS GAINED
+       ====================================================== */
+    #skills-gained {
+      padding: 90px 0;
+      background: var(--bg2);
+    }
+
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 16px;
+    }
+
+    .skill-gained-card {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      transition: border-color var(--tr), transform var(--tr);
+    }
+
+    .skill-gained-card:hover {
+      border-color: rgba(0, 229, 160, .3);
+      transform: translateY(-3px);
+    }
+
+    .skill-gained-card .sg-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      background: var(--accent-dim);
+      color: var(--accent);
+    }
+
+    .skill-gained-card h4 {
+      font-family: var(--font-head);
+      font-size: .95rem;
+      font-weight: 700;
+    }
+
+    .skill-gained-card p {
+      font-size: .8rem;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .sg-bar-wrap {
+      height: 4px;
+      background: var(--border);
+      border-radius: 99px;
+      overflow: hidden;
+      margin-top: 4px;
+    }
+
+    .sg-bar {
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      border-radius: 99px;
+    }
+
+    /* ======================================================
+       FOOTER
+       ====================================================== */
+    footer {
+      background: var(--bg2);
+      border-top: 1px solid var(--border);
+      padding: 36px 0;
+      text-align: center;
+    }
+
+    .footer-inner {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 18px;
+    }
+
+    .footer-logo {
+      font-family: var(--font-head);
+      font-size: 1.3rem;
+      font-weight: 800;
+    }
+
+    .footer-logo span {
+      color: var(--accent);
+    }
+
+    .footer-nav {
+      display: flex;
+      gap: 24px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .footer-nav a {
+      font-size: .84rem;
+      color: var(--muted);
+      transition: color var(--tr);
+    }
+
+    .footer-nav a:hover {
+      color: var(--accent);
+    }
+
+    .footer-copy {
+      font-size: .78rem;
+      color: var(--muted);
+    }
+
+    /* ── back to top ── */
+    #btt {
+      position: fixed;
+      bottom: 28px;
+      right: 28px;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: var(--accent);
+      color: #0b0e14;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity var(--tr), transform var(--tr);
+      cursor: pointer;
+      border: none;
+      z-index: 999;
+    }
+
+    #btt.show {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    #btt:hover {
+      transform: translateY(-3px);
+      background: #00ffb2;
+    }
+
+    /* ======================================================
+       RESPONSIVE
+       ====================================================== */
+    @media (max-width: 900px) {
+      .learned-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .day-content-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .nav-links {
+        display: none;
+        position: absolute;
+        top: var(--nav-h);
+        left: 0;
+        right: 0;
+        background: var(--bg);
+        flex-direction: column;
+        gap: 0;
+        padding: 12px 0;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .nav-links.open {
+        display: flex;
+      }
+
+      .nav-links a {
+        padding: 14px 24px;
+      }
+
+      .hamburger {
+        display: flex;
+      }
+
+      .nav-breadcrumb {
+        display: none;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .learned-grid {
+        grid-template-columns: 1fr;
+      }
+
+      table {
+        font-size: .82rem;
+      }
+
+      thead th,
+      tbody td {
+        padding: 12px 14px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ============================================================
+       NAVBAR
+       ============================================================ -->
+  <nav id="navbar">
+    <div class="container nav-inner">
+      <div style="display:flex;align-items:center;gap:20px">
+        <!-- ── EDIT: Update initials ── -->
+        <a href="index.html" class="nav-logo"><span>T</span>B.</a>
+        <div class="nav-breadcrumb">
+          <a href="index.html" style="color:var(--muted)">Portfolio</a>
+          <i class="fas fa-chevron-right"></i>
+          <span class="current">Module 1 — Web Dev</span>
+        </div>
+      </div>
+
+      <button class="hamburger" id="hamburger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#hero" class="active">Overview</a></li>
+        <li><a href="#learned">What I Learned</a></li>
+        <li><a href="#assignments">Assignments</a></li>
+        <li><a href="#skills-gained">Skills</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- ============================================================
+       HERO / BANNER
+       ============================================================ -->
+  <section id="hero">
+    <div class="hero-bg"></div>
+    <div class="container">
+      <div class="hero-content">
+
+        <div class="hero-badge fade-up">
+          <a href="portfolio.html" class="hero-back">
+            <i class="fas fa-arrow-left"></i> Back to Portfolio
+          </a>
+          <span class="chip">MODULE 1</span>
+          <span class="chip blue">Web Development</span>
+        </div>
+
+        <!-- ── EDIT: Personalise the hero title / subtitle ── -->
+        <h1 class="hero-title fade-up">
+          Web<br><span class="accent">Development</span>
+        </h1>
+
+        <p class="hero-subtitle fade-up">
+          A 7-day deep dive into the fundamentals of the web —
+          building real projects with <strong style="color:var(--text)">HTML</strong>,
+          <strong style="color:var(--text)">CSS</strong>, and
+          <strong style="color:var(--text)">JavaScript</strong>.
+        </p>
+
+        <div class="hero-meta fade-up">
+          <div class="hero-meta-item"><i class="fas fa-calendar-alt"></i> 7 Days</div>
+          <div class="hero-meta-item"><i class="fas fa-layer-group"></i> Module 1 of 8</div>
+          <!-- ── EDIT: Update assignment count ── -->
+          <div class="hero-meta-item"><i class="fas fa-file-code"></i> Assignments</div>
+          <!-- ── EDIT: Update your college/lab name ── -->
+          <div class="hero-meta-item"><i class="fas fa-university"></i> SSGMCE</div>
+        </div>
+
+        <!-- ── EDIT: Set the fill width % to reflect your actual module completion ── -->
+        <div class="module-progress fade-up">
+          <span class="mp-label">Progress</span>
+          <div class="mp-track">
+            <div class="mp-fill" style="width: 100%"></div>
+          </div>
+          <span class="mp-pct">100%</span>
+          <span style="font-size:.82rem;color:var(--muted)">Module Complete</span>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       WHAT I LEARNED
+       ============================================================ -->
+  <section id="learned">
+    <div class="container">
+      <p class="chip fade-up" style="margin-bottom:14px">Knowledge Gained</p>
+      <h2 class="section-title fade-up">What I <span>Learned</span></h2>
+
+      <div class="learned-grid">
+
+        <!-- HTML Card -->
+        <div class="learn-card html fade-up">
+          <div class="learn-icon"><i class="fab fa-html5"></i></div>
+          <h3>HTML5</h3>
+          <!-- ── EDIT: Update description ── -->
+          <p>Learned the backbone of every webpage — structure, semantics, and accessibility-friendly markup.</p>
+          <div class="topic-list">
+            <!-- ── EDIT: Add/remove topics you actually covered ── -->
+            <div class="topic-item"><i class="fas fa-circle-dot"></i> Document structure &amp; </div>
+            <div class="topic-item"><i class="fas fa-circle-dot"></i> Semantic elements (header, nav, main, footer)
+            </div>
+            <div class="topic-item"><i class="fas fa-circle-dot"></i> Forms, inputs &amp; validation</div>
+            <div class="topic-item"><i class="fas fa-circle-dot"></i> Tables, lists &amp; media embeds</div>
+            <div class="topic-item"><i class="fas fa-circle-dot"></i> Form &amp; input type</div>
+            <!-- Add more topic-items as needed -->
+          </div>
+        </div>
+
+        <!-- CSS Card -->
+        <div class="learn-card css fade-up">
+          <div class="learn-icon"><i class="fab fa-css3-alt"></i></div>
+          <h3>CSS3</h3>
+          <p>Mastered styling and layout techniques to turn plain HTML into visually appealing, responsive pages.</p>
+          <div class="topic-list">
+            <div class="topic-item"><i class="fas fa-circle-dot"></i> Selectors, specificity &amp; cascade</div>
+            <div class="topic-item"><i class="fas fa-circle-dot"></i> Box model, margin &amp; padding</div>
+            <div class="topic-item"><i class="fas fa-circle-dot"></i> Flexbox &amp; CSS Grid layout</div>
+
+          </div>
+        </div>
+
+        <!-- JavaScript Card -->
+        <div class="learn-card js fade-up">
+          <div class="learn-icon"><i class="fab fa-js-square"></i></div>
+          <h3>JavaScript</h3>
+          <p>Very basic concepts.</p>
+          <div class="topic-list">
+            <div class="topic-item"><i class="fas fa-circle-dot"></i> Variables, data types &amp; operators</div>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       ASSIGNMENTS OVERVIEW TABLE
+       ============================================================ -->
+  <section id="assignments">
+    <div class="container">
+      <p class="chip fade-up" style="margin-bottom:14px">All Assignments</p>
+      <h2 class="section-title fade-up">Assignment <span>Overview</span></h2>
+
+      <div class="assignment-table-wrap fade-up">
+        <table>
+          <thead>
+            <tr>
+              <th>Day</th>
+              <th>Assignment Title</th>
+              <th>Topics Covered</th>
+              <th>Technologies</th>
+              <th>Status</th>
+              <th>View</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- ── EDIT: Fill each row with your actual assignment details ── -->
+            <tr>
+
+              <td><span class="day-badge">1</span></td>
+              <td class="td-title">Simple info-page</td>
+              <td style="color:var(--muted);font-size:.84rem">Basic text elements</td>
+              <td>
+                <div class="td-tech"><span class="tech-pill">HTML</span></div>
+              </td>
+              <td><span class="status-done"><i class="fas fa-check"></i> Done</span></td>
+              <td><a href="codes\first_fablab.html" class="status-done">Check</a></td>
+            </tr>
+
+            <tr>
+              <td><span class="day-badge">2</span></td>
+              <td class="td-title">Table </td>
+              <td style="color:var(--muted);font-size:.84rem">Media attachment and table</td>
+              <td>
+                <div class="td-tech"><span class="tech-pill">HTML</span><span class="tech-pill">CSS</span></div>
+              </td>
+              <td><span class="status-done"><i class="fas fa-check"></i> Done</span></td>
+              <td><a href="codes\college_table.html" class="status-done">Check</a></td>
+            </tr>
+            <tr>
+              <td><span class="day-badge">3</span></td>
+              <td class="td-title">Forms </td>
+              <td style="color:var(--muted);font-size:.84rem">input type and ID creation</td>
+              <td>
+                <div class="td-tech"><span class="tech-pill">HTML</span><span class="tech-pill">CSS</span></div>
+              </td>
+              <td><span class="status-done"><i class="fas fa-check"></i> Done</span></td>
+              <td><a href="codes\dj_registration_form.html" class="status-done">Check</a></td>
+            </tr>
+            <tr>
+              <td><span class="day-badge">4</span></td>
+              <td class="td-title">Semantic elements</td>
+              <td style="color:var(--muted);font-size:.84rem">Header, nav, footer & section</td>
+              <td>
+                <div class="td-tech"><span class="tech-pill">HTML</span><span class="tech-pill">CSS</span></div>
+              </td>
+              <td><span class="status-done"><i class="fas fa-check"></i> Done</span></td>
+              <td><a href="codes\semantic.html" class="status-done">Check</a></td>
+            </tr>
+            <tr>
+              <td><span class="day-badge">5</span></td>
+              <td class="td-title">Flexbox</td>
+              <td style="color:var(--muted);font-size:.84rem">Flexbox, box model</td>
+              <td>
+                <div class="td-tech"><span class="tech-pill">HTML</span><span class="tech-pill">CSS</span></div>
+              </td>
+              <td><span class="status-done"><i class="fas fa-check"></i> Done</span></td>
+              <td><a href="codes\circle.html" class="status-done">Check</a></td>
+            </tr>
+            <tr>
+              <td><span class="day-badge">6</span></td>
+              <td class="td-title">Basic JS</td>
+              <td style="color:var(--muted);font-size:.84rem">Operators & syntax</td>
+              <td>
+                <div class="td-tech"><span class="tech-pill">HTML</span><span class="tech-pill">CSS</span></div>
+              </td>
+              <td><span class="status-done"><i class="fas fa-check"></i> Done</span></td>
+              <td><a href="codes\theory.html" class="status-done">Check</a></td>
+            </tr>
+            <tr>
+              <td><span class="day-badge">7</span></td>
+              <td class="td-title">To do list</td>
+              <td style="color:var(--muted);font-size:.84rem">TOPIC_COVERED</td>
+              <td>
+                <div class="td-tech"><span class="tech-pill">HTML</span><span class="tech-pill">CSS</span><span
+                    class="tech-pill">JS</span></div>
+              </td>
+              <td><span class="status-done"><i class="fas fa-check"></i> Done</span></td>
+              <td><a href="codes\to-do.html" class="status-done">Check</a></td>
+            </tr>
+            <tr>
+              <td><span class="day-badge">8</span></td>
+              <td class="td-title">Portfolio(Final Project)</td>
+              <td style="color:var(--muted);font-size:.84rem">Everything</td>
+              <td>
+                <div class="td-tech"><span class="tech-pill">HTML</span><span class="tech-pill">CSS</span><span
+                    class="tech-pill">JS</span></div>
+              </td>
+              <td><span class="status-done"><i class="fas fa-check"></i> Done</span></td>
+              <td><a href="index.html" class="status-done">Check</a></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+
+
+  <!-- ============================================================
+       SKILLS GAINED
+       ============================================================ -->
+  <section id="skills-gained">
+    <div class="container">
+      <p class="chip fade-up" style="margin-bottom:14px">After This Module</p>
+      <h2 class="section-title fade-up">Skills <span>Gained</span></h2>
+
+      <div class="skills-grid fade-up">
+        <!-- ── EDIT: Update skill names, descriptions and bar widths (0%–100%) ── -->
+        <div class="skill-gained-card">
+          <div class="sg-icon"><i class="fab fa-html5"></i></div>
+          <h4>HTML5</h4>
+          <p>Semantic markup &amp; document structure</p>
+          <div class="sg-bar-wrap">
+            <div class="sg-bar" style="width:70%"></div>
+          </div>
+        </div>
+        <div class="skill-gained-card">
+          <div class="sg-icon"><i class="fab fa-css3-alt"></i></div>
+          <h4>CSS3</h4>
+          <p>Styling, Flexbox, Grid &amp; responsive design</p>
+          <div class="sg-bar-wrap">
+            <div class="sg-bar" style="width:36%"></div>
+          </div>
+        </div>
+        <div class="skill-gained-card">
+          <div class="sg-icon"><i class="fab fa-js-square"></i></div>
+          <h4>JavaScript</h4>
+          <p>DOM manipulation &amp; interactivity</p>
+          <div class="sg-bar-wrap">
+            <div class="sg-bar" style="width:40%"></div>
+          </div>
+        </div>
+        <div class="skill-gained-card">
+          <div class="sg-icon"><i class="fas fa-mobile-alt"></i></div>
+          <h4>Responsive Design</h4>
+          <p>Building layouts that work on all screen sizes</p>
+          <div class="sg-bar-wrap">
+            <div class="sg-bar" style="width:30%"></div>
+          </div>
+        </div>
+        <div class="skill-gained-card">
+          <div class="sg-icon"><i class="fab fa-github"></i></div>
+          <h4>Version Control</h4>
+          <p>Using Git &amp; GitHub to track and share work</p>
+          <div class="sg-bar-wrap">
+            <div class="sg-bar" style="width:80%"></div>
+          </div>
+        </div>
+        <div class="skill-gained-card">
+          <div class="sg-icon"><i class="fas fa-universal-access"></i></div>
+          <h4>Web Standards</h4>
+          <p>Accessibility, semantics &amp; best practices</p>
+          <div class="sg-bar-wrap">
+            <div class="sg-bar" style="width:35%"></div>
+          </div>
+        </div>
+        <!-- Add more skill-gained-card blocks as needed -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       FOOTER
+       ============================================================ -->
+  <footer>
+    <div class="container footer-inner">
+      <!-- ── EDIT: Update initials ── -->
+      <div class="footer-logo"><span>Y</span>N.</div>
+      <nav class="footer-nav">
+        <a href="portfolio.html">← Back to Portfolio</a>
+        <a href="#hero">Overview</a>
+        <a href="#learned">What I Learned</a>
+        <a href="#assignments">Assignments</a>
+        <a href="#showcase">Day-wise</a>
+      </nav>
+      <!-- ── EDIT: Update your name ── -->
+      <p class="footer-copy">© <span id="year"></span> YOUR_NAME — Module 1 Web Development</p>
+    </div>
+  </footer>
+
+  <button id="btt" aria-label="Back to top"><i class="fas fa-chevron-up"></i></button>
+
+  <!-- ============================================================
+       JAVASCRIPT
+       ============================================================ -->
+  <script>
+    /* Enable animations */
+    document.body.classList.add('js-ready');
+
+    /* Year */
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    /* Navbar scroll */
+    const navbar = document.getElementById('navbar');
+    const btt = document.getElementById('btt');
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('scrolled', window.scrollY > 30);
+      btt.classList.toggle('show', window.scrollY > 400);
+    });
+    btt.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+    /* Hamburger */
+    document.getElementById('hamburger').addEventListener('click', () => {
+      document.getElementById('navLinks').classList.toggle('open');
+    });
+    document.querySelectorAll('#navLinks a').forEach(a =>
+      a.addEventListener('click', () => document.getElementById('navLinks').classList.remove('open'))
+    );
+
+    /* Active nav on scroll */
+    const sections = document.querySelectorAll('section[id]');
+    const navAs = document.querySelectorAll('.nav-links a');
+    window.addEventListener('scroll', () => {
+      let cur = '';
+      sections.forEach(s => { if (window.scrollY >= s.offsetTop - 100) cur = s.id; });
+      navAs.forEach(a => {
+        a.classList.remove('active');
+        if (a.getAttribute('href') === '#' + cur) a.classList.add('active');
+      });
+    });
+
+    /* Fade-up observer */
+    const fadeEls = document.querySelectorAll('.fade-up');
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+    }, { threshold: 0.1 });
+    fadeEls.forEach(el => obs.observe(el));
+
+
+  </script>
+</body>
+
+</html>
