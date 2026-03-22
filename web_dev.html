@@ -630,7 +630,17 @@
       padding: 4px 10px;
       border-radius: 99px;
     }
+tbody tr {
+              border-top: 1px solid var(--border);
+              transition: background var(--tr), border-color var(--tr), box-shadow var(--tr);
+              cursor: pointer;
+            }
 
+            tbody tr:hover {
+              background: var(--bg3);
+              border-color: rgba(0, 229, 191, 0.2);
+              box-shadow: 0 4px 12px rgba(0, 229, 160, .1);
+            }
     .status-wip {
       display: inline-flex;
       align-items: center;
@@ -1166,7 +1176,7 @@
 
         <div class="hero-meta fade-up">
           <div class="hero-meta-item"><i class="fas fa-calendar-alt"></i> 7 Days</div>
-          <div class="hero-meta-item"><i class="fas fa-layer-group"></i> Module 1 of 8</div>
+          <div class="hero-meta-item"><i class="fas fa-layer-group"></i> Module 1 of 9</div>
           <!-- ── EDIT: Update assignment count ── -->
           <div class="hero-meta-item"><i class="fas fa-file-code"></i> Assignments</div>
           <!-- ── EDIT: Update your college/lab name ── -->
@@ -1264,9 +1274,9 @@
             </tr>
           </thead>
           <tbody>
-            <!-- ── EDIT: Fill each row with your actual assignment details ── -->
-            <tr>
 
+            <tr>
+            
               <td><span class="day-badge">1</span></td>
               <td class="td-title">Simple info-page</td>
               <td style="color:var(--muted);font-size:.84rem">Basic text elements</td>
@@ -1274,7 +1284,7 @@
                 <div class="td-tech"><span class="tech-pill">HTML</span></div>
               </td>
               <td><span class="status-done"><i class="fas fa-check"></i> Done</span></td>
-              <td><a href="codes/first_fablab.html" class="status-done">Check</a></td>
+              <td><a href="first_fablab.html" class="status-done">Check</a></td>
             </tr>
 
             <tr>
@@ -1372,7 +1382,7 @@
           <h4>HTML5</h4>
           <p>Semantic markup &amp; document structure</p>
           <div class="sg-bar-wrap">
-            <div class="sg-bar" style="width:70%"></div>
+            <div class="sg-bar" style="width:100%"></div>
           </div>
         </div>
         <div class="skill-gained-card">
@@ -1380,15 +1390,15 @@
           <h4>CSS3</h4>
           <p>Styling, Flexbox, Grid &amp; responsive design</p>
           <div class="sg-bar-wrap">
-            <div class="sg-bar" style="width:36%"></div>
+            <div class="sg-bar" style="width:100%"></div>
           </div>
         </div>
         <div class="skill-gained-card">
           <div class="sg-icon"><i class="fab fa-js-square"></i></div>
           <h4>JavaScript</h4>
-          <p>DOM manipulation &amp; interactivity</p>
+          <p>DOM manipulation, basic logic &amp; interactivity</p>
           <div class="sg-bar-wrap">
-            <div class="sg-bar" style="width:40%"></div>
+            <div class="sg-bar" style="width:100%"></div>
           </div>
         </div>
         <div class="skill-gained-card">
@@ -1396,7 +1406,7 @@
           <h4>Responsive Design</h4>
           <p>Building layouts that work on all screen sizes</p>
           <div class="sg-bar-wrap">
-            <div class="sg-bar" style="width:30%"></div>
+            <div class="sg-bar" style="width:100%"></div>
           </div>
         </div>
         <div class="skill-gained-card">
@@ -1404,18 +1414,9 @@
           <h4>Version Control</h4>
           <p>Using Git &amp; GitHub to track and share work</p>
           <div class="sg-bar-wrap">
-            <div class="sg-bar" style="width:80%"></div>
+            <div class="sg-bar" style="width:100%"></div>
           </div>
         </div>
-        <div class="skill-gained-card">
-          <div class="sg-icon"><i class="fas fa-universal-access"></i></div>
-          <h4>Web Standards</h4>
-          <p>Accessibility, semantics &amp; best practices</p>
-          <div class="sg-bar-wrap">
-            <div class="sg-bar" style="width:35%"></div>
-          </div>
-        </div>
-        <!-- Add more skill-gained-card blocks as needed -->
       </div>
     </div>
   </section>
@@ -1426,16 +1427,16 @@
   <footer>
     <div class="container footer-inner">
       <!-- ── EDIT: Update initials ── -->
-      <div class="footer-logo"><span>Y</span>N.</div>
+      <div class="footer-logo"><span>T</span>B.</div>
       <nav class="footer-nav">
         <a href="portfolio.html">← Back to Portfolio</a>
         <a href="#hero">Overview</a>
         <a href="#learned">What I Learned</a>
         <a href="#assignments">Assignments</a>
-        <a href="#showcase">Day-wise</a>
+
       </nav>
       <!-- ── EDIT: Update your name ── -->
-      <p class="footer-copy">© <span id="year"></span> YOUR_NAME — Module 1 Web Development</p>
+      <p class="footer-copy">© <span id="year"></span> TANAY -- Module 1 Web Development</p>
     </div>
   </footer>
 
