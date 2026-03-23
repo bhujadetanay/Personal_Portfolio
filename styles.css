@@ -2,19 +2,14 @@
        CSS VARIABLES — tweak colours, fonts, sizes here
        ============================================================ */
 :root {
-    --accent: #00e5a0;
-    /* green teal highlight */
-    --accent-dim: rgba(0, 229, 160, .15);
+    --accent: #00b7ff;
+
+    --accent-dim: rgba(88, 0, 229, 0.15);
     --bg: #000000;
-    /* dark background */
     --bg2: #060808;
-    /* card / section background */
     --bg3: #07080b;
-    /* subtle surface */
     --text: #7c85a9;
-    /* primary text */
     --muted: #8892a4;
-    /* secondary text */
     --border: rgba(255, 255, 255, .07);
     --font-head: 'Syne', sans-serif;
     --font-body: 'DM Sans', sans-serif;
@@ -23,6 +18,7 @@
     --nav-h: 68px;
 }
 
+/*from github*/
 /* ── Custom Crosshair Cursor ── */
 * {
     cursor: none !important;
@@ -46,7 +42,7 @@
     left: 0;
     width: 36px;
     height: 36px;
-    border: 1.5px solid rgba(0, 229, 160, .5);
+    border: 1.5px solid #7300ff;
     border-radius: 50%;
     transform: translate(-50%, -50%);
     transition: width .22s ease, height .22s ease, border-color .22s ease;
@@ -56,7 +52,7 @@
 body.cursor-hover #cursor-ring {
     width: 54px;
     height: 54px;
-    border-color: rgba(0, 229, 160, .95);
+    border-color: #7300ff;
 }
 
 body.cursor-click #cursor-crosshair {
@@ -78,11 +74,9 @@ body.cursor-click #cursor-crosshair {
     margin: 4px 0 20px 0;
     font-size: 0.9rem;
     color: var(--muted);
-    /* uses your existing muted color variable */
     line-height: 1.6;
 }
 
-/* ── Reset ── */
 *,
 *::before,
 *::after {
@@ -123,7 +117,6 @@ img {
     display: block;
 }
 
-/* ── Scrollbar ── */
 ::-webkit-scrollbar {
     width: 5px;
 }
@@ -137,7 +130,6 @@ img {
     border-radius: 99px;
 }
 
-/* ── Utility ── */
 .container {
     max-width: 1100px;
     margin: 0 auto;
@@ -183,7 +175,7 @@ img {
 }
 
 .card:hover {
-    border-color: rgba(229, 0, 0, 0.35);
+    border-color: #7300ff;
     transform: translateY(-3px);
     box-shadow: 0 16px 40px rgba(0, 0, 0, .35);
 }
@@ -209,7 +201,7 @@ img {
 }
 
 .btn-primary:hover {
-    background: #00ffb2;
+    background: #7300ff;
     transform: translateY(-2px);
     box-shadow: 0 8px 24px rgba(0, 229, 160, .3);
 }
@@ -398,7 +390,6 @@ img {
     margin-bottom: 16px;
 }
 
-/* ── EDIT: Replace YOUR_NAME in the HTML below ── */
 .hero-role {
     font-size: clamp(1rem, 2.5vw, 1.4rem);
     color: var(--muted);
@@ -438,7 +429,6 @@ img {
     margin-top: 4px;
 }
 
-/* ── Avatar ── */
 .hero-avatar-wrap {
     position: relative;
     width: 300px;
@@ -516,7 +506,6 @@ img {
     color: rgba(0, 229, 160, .4);
 }
 
-/* socials sidebar */
 .hero-socials {
     position: fixed;
     left: 24px;
