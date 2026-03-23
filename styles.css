@@ -2,7 +2,7 @@
        CSS VARIABLES — tweak colours, fonts, sizes here
        ============================================================ */
 :root {
-    --accent: #00b7ff;
+    --accent: #4400ff;
 
     --accent-dim: rgba(88, 0, 229, 0.15);
     --bg: #000000;
